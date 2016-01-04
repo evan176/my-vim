@@ -135,7 +135,7 @@ nnoremap <S-Tab> :bnext<CR>
 
 " Compile key
 autocmd BufRead *.py nmap <F12> :w !python %<CR>
-autocmd BufRead *.sh nmap <F12> :w !sh %<CR>
+autocmd BufRead *.sh nmap <F12> :w !bash %<CR>
 autocmd BufRead *.c nmap <F12> :!gcc --o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 autocmd BufRead *.cpp nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 " autocmd filetype cpp nnoremap <F12> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
