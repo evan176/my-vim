@@ -32,12 +32,13 @@ Attributes:
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 import logging
+import argparse
 
 
 logger = logging.getLogger(__name__)
 
 
-def test:
+def test():
     """Filter link which belongs to google internal link
     Examples:
     Args:
@@ -47,5 +48,15 @@ def test:
 
 
 if __name__ == '__main__':
-    pass
-.
+    arg_parser = argparse.ArgumentParser(
+                              description='',
+                              formatter_class=argparse.RawTextHelpFormatter)
+
+    arg_parser.add_argument('--log', type=str, help='set log name')
+    args = arg_parser.parse_args()
+
+    logging.basicConfig(
+                filename=args.log,
+                level=logging.INFO,
+                format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                filemode='a')
