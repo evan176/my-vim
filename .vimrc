@@ -45,6 +45,7 @@ nmap <F3> :TagbarToggle<CR>
 
 " <YouCompleteMe>
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 
 
 " <NerdTree>
@@ -112,6 +113,8 @@ set hlsearch
 set incsearch
 autocmd BufRead,BufNewFile *.py set softtabstop=4 shiftwidth=4
 autocmd BufRead,BufNewFile *.sh set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.c set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.cpp set softtabstop=2 shiftwidth=2
 set expandtab
 set cursorline
 set mouse=a
@@ -146,6 +149,8 @@ autocmd bufnewfile *.py so /home/evan/.vim/header/python_header.txt
 autocmd bufnewfile *.py exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.sh so /home/evan/.vim/header/shell_header.txt
 autocmd bufnewfile *.sh exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
+autocmd bufnewfile *.c so /home/evan/.vim/header/c_header.txt
+autocmd bufnewfile *.c exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.cpp so /home/evan/.vim/header/c++_header.txt
 autocmd bufnewfile *.cpp exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 
