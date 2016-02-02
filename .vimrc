@@ -13,13 +13,15 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/vundle'
 Plugin 'majutsushi/tagbar'
+Plugin 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'kshenoy/vim-signature'
 Plugin 'tomtom/tlib_vim'
 Plugin 'evan176/preview-reg'
@@ -43,9 +45,22 @@ filetype plugin indent on     " required
 nmap <F3> :TagbarToggle<CR>
 
 
+" <SuperTab>
+let g:SuperTabDefaultCompletionType = '<C-tab>'
+
+
 " <YouCompleteMe>
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_use_ultisnips_completer = 1
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>'] 
+
+
+" <UltiSnip>
+let g:UltiSnipsSnippetsDir=$HOME.'/.vim/bundle/vim-snippets/UltiSnips/'
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 
 " <NerdTree>
@@ -63,6 +78,8 @@ let g:syntastic_check_on_wq=0
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
 let g:syntastic_error_symbol = "X"
 let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_c_checkers = ['/usr/bin/gcc']
 let g:check_flag=1
 function! SyntasticCheckOption()
     if g:check_flag
@@ -113,6 +130,7 @@ set hlsearch
 set incsearch
 autocmd BufRead,BufNewFile *.py set softtabstop=4 shiftwidth=4
 autocmd BufRead,BufNewFile *.sh set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.h set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.c set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.cpp set softtabstop=2 shiftwidth=2
 set expandtab
@@ -123,13 +141,16 @@ if has('unnamedplus')
 else
     set clipboard+=unnamed
 endif
+" Remap clipboard
+nnoremap <C-v> "+p
+vmap <C-c> "+y
 
 
 " Remap Ctrl - W
-nnoremap <C-Up> <C-W><C-K>
-nnoremap <C-Down> <C-W><C-J>
-nnoremap <C-Right> <C-W><C-L>
-nnoremap <C-Left> <C-W><C-H>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
 
 
 " Remap Tab - W
@@ -141,7 +162,6 @@ autocmd BufRead *.py nmap <F12> :w !python %<CR>
 autocmd BufRead *.sh nmap <F12> :w !bash %<CR>
 autocmd BufRead *.c nmap <F12> :!gcc --o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 autocmd BufRead *.cpp nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
-" autocmd filetype cpp nnoremap <F12> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 
 " CompleteNewFile
@@ -149,15 +169,13 @@ autocmd bufnewfile *.py so /home/evan/.vim/header/python_header.txt
 autocmd bufnewfile *.py exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.sh so /home/evan/.vim/header/shell_header.txt
 autocmd bufnewfile *.sh exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
+autocmd bufnewfile *.h so /home/evan/.vim/header/c_h_header.txt
+autocmd bufnewfile *.h exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.c so /home/evan/.vim/header/c_header.txt
 autocmd bufnewfile *.c exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.cpp so /home/evan/.vim/header/c++_header.txt
 autocmd bufnewfile *.cpp exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
-
-
-" Remap clipboard
-nnoremap <C-v> "+p
-vmap <C-c> "+y
+autocmd bufnewfile CMakeLists.txt so /home/evan/.vim/header/CMakeLists_header.txt
 
 
 " [Shortcuts Mapping Table]
@@ -171,3 +189,8 @@ vmap <C-c> "+y
 " Ctrl - v      =   paste from clipboard in normal mode
 " \ p           =   Show register menu to paste
 " \ m           =   Show marks menu to jump
+" Ctrl - h      =   Move left
+" Ctrl - l      =   Move right
+" Ctrl - j      =   Move down
+" Ctrl - k      =   Move up
+" Tab           =   Youcompleteme & UltiSnips
