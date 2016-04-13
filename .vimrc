@@ -194,3 +194,4 @@ autocmd bufnewfile CMakeLists.txt so /home/evan/.vim/header/CMakeLists_header.tx
 " Ctrl - j      =   Move down
 " Ctrl - k      =   Move up
 " Tab           =   Youcompleteme & UltiSnips
+imap qq <ESC>
