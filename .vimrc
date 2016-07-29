@@ -12,17 +12,20 @@ call vundle#rc()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/vundle'
-Plugin 'majutsushi/tagbar'
 Plugin 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
+Plugin 'scrooloose/syntastic'
+Plugin 'Raimondi/delimitMate'
+Plugin 'majutsushi/tagbar'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'chrisbra/csv.vim'
 Plugin 'kshenoy/vim-signature'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'tomtom/tlib_vim'
 Plugin 'evan176/preview-reg'
 
@@ -46,11 +49,14 @@ nmap <F3> :TagbarToggle<CR>
 
 
 " <SuperTab>
-let g:SuperTabDefaultCompletionType = '<C-tab>'
+let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabDefaultCompletionType = '<C-j>'
 
 
 " <YouCompleteMe>
-let g:ycm_autoclose_preview_window_after_completion = 1
+set completeopt-=preview
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_use_ultisnips_completer = 1
@@ -61,6 +67,9 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 " <UltiSnip>
 let g:UltiSnipsSnippetsDir=$HOME.'/.vim/bundle/vim-snippets/UltiSnips/'
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<C-tab>"
 
 
 " <NerdTree>
@@ -102,16 +111,10 @@ set background=dark
 colorscheme solarized
 
 
-" <CtrlP>
-let g:ctrlp_map='<c-p>'
-let g:ctrlp_cmd='CtrlP'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-
-
 " <Airline>
-let g:airline#extensions#tabline#enabled=1
 set laststatus=2
+let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts = 1
 
 
 " <NerdCommenter>
@@ -133,6 +136,7 @@ autocmd BufRead,BufNewFile *.sh set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.h set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.c set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.cpp set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.cc set softtabstop=2 shiftwidth=2
 set expandtab
 set cursorline
 set mouse=a
@@ -162,6 +166,7 @@ autocmd BufRead *.py nmap <F12> :w !python %<CR>
 autocmd BufRead *.sh nmap <F12> :w !bash %<CR>
 autocmd BufRead *.c nmap <F12> :!gcc --o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 autocmd BufRead *.cpp nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
+autocmd BufRead *.cc nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 
 
 " CompleteNewFile
@@ -175,6 +180,8 @@ autocmd bufnewfile *.c so /home/evan/.vim/header/c_header.txt
 autocmd bufnewfile *.c exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.cpp so /home/evan/.vim/header/c++_header.txt
 autocmd bufnewfile *.cpp exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
+autocmd bufnewfile *.cc so /home/evan/.vim/header/c++_header.txt
+autocmd bufnewfile *.cc exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile CMakeLists.txt so /home/evan/.vim/header/CMakeLists_header.txt
 
 
