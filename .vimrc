@@ -23,10 +23,10 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'chrisbra/csv.vim'
 Plugin 'kshenoy/vim-signature'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tomtom/tlib_vim'
+Plugin 'fatih/vim-go'
 Plugin 'evan176/preview-reg'
 
 
@@ -89,6 +89,7 @@ let g:syntastic_error_symbol = "X"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_c_checkers = ['/usr/bin/gcc']
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:check_flag=1
 function! SyntasticCheckOption()
     if g:check_flag
@@ -124,6 +125,19 @@ let g:NERDSpaceDelims=1
 " <Preview-reg>
 nnoremap <leader>p :call SelectReg()<CR>  
 nnoremap <leader>m :call SelectMark()<CR>
+
+
+" <vim-go>
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
+let g:go_play_open_browser = 0
+let g:go_get_update = 0
 
 
 " My custom setting
@@ -167,22 +181,18 @@ autocmd BufRead *.sh nmap <F12> :w !bash %<CR>
 autocmd BufRead *.c nmap <F12> :!gcc --o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 autocmd BufRead *.cpp nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 autocmd BufRead *.cc nmap <F12> :!g++ -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
+autocmd FileType go nmap <F12> <Plug>(go-run)
 
 
 " CompleteNewFile
 autocmd bufnewfile *.py so /home/evan/.vim/header/python_header.txt
-autocmd bufnewfile *.py exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.sh so /home/evan/.vim/header/shell_header.txt
-autocmd bufnewfile *.sh exe "1," . 10 . "g/# Copyright (c)/s//# Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.h so /home/evan/.vim/header/c_h_header.txt
-autocmd bufnewfile *.h exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.c so /home/evan/.vim/header/c_header.txt
-autocmd bufnewfile *.c exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.cpp so /home/evan/.vim/header/c++_header.txt
-autocmd bufnewfile *.cpp exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile *.cc so /home/evan/.vim/header/c++_header.txt
-autocmd bufnewfile *.cc exe "1," . 10 . "g/Copyright (c)/s//Copyright (c) " .strftime("%Y")
 autocmd bufnewfile CMakeLists.txt so /home/evan/.vim/header/CMakeLists_header.txt
+autocmd bufnewfile Makefile so /home/evan/.vim/header/make_header.txt
 
 
 " [Shortcuts Mapping Table]
@@ -201,4 +211,3 @@ autocmd bufnewfile CMakeLists.txt so /home/evan/.vim/header/CMakeLists_header.tx
 " Ctrl - j      =   Move down
 " Ctrl - k      =   Move up
 " Tab           =   Youcompleteme & UltiSnips
-imap qq <ESC>
