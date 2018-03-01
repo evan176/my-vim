@@ -1,17 +1,12 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" alternatively, pass a path where Vundle should install plugins
-"let path = '~/some/path/here'
-"call vundle#rc(path)
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
+Plugin 'VundleVim/Vundle.vim'
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
 Plugin 'ervandew/supertab'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
@@ -24,10 +19,14 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kshenoy/vim-signature'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'dyng/ctrlsf.vim'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'tomtom/tlib_vim'
+Plugin 'mbbill/undotree'
 Plugin 'fatih/vim-go'
-Plugin 'evan176/preview-reg'
+Plugin 'nathanaelkane/vim-indent-guides'
+
+call vundle#end()
 
 
 filetype plugin indent on     " required
@@ -116,15 +115,20 @@ colorscheme solarized
 set laststatus=2
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 
 " <NerdCommenter>
 let g:NERDSpaceDelims=1
 
 
-" <Preview-reg>
-nnoremap <leader>p :call SelectReg()<CR>  
-nnoremap <leader>m :call SelectMark()<CR>
+" <Easymotion>
+map <leader> <Plug>(easymotion-prefix)
+
+
+" <CtrlSF>
+map <C-P> <Plug>CtrlSFPrompt
+let g:ctrlsf_default_root = 'project'
 
 
 " <vim-go>
@@ -140,6 +144,14 @@ let g:go_play_open_browser = 0
 let g:go_get_update = 0
 
 
+" <Indent Guides>
+let g:indent_guides_enable_on_vim_startup = 1
+
+
+" <UndoTree>
+map <F5> :UndotreeToggle<CR>
+
+
 " My custom setting
 set number
 set autoindent
@@ -151,6 +163,10 @@ autocmd BufRead,BufNewFile *.h set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.c set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.cpp set softtabstop=2 shiftwidth=2
 autocmd BufRead,BufNewFile *.cc set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.html set softtabstop=2 shiftwidth=2
+autocmd BufRead,BufNewFile *.css set softtabstop=4 shiftwidth=4
+autocmd BufRead,BufNewFile *.css set softtabstop=4 shiftwidth=4
+
 set expandtab
 set cursorline
 set mouse=a
@@ -171,8 +187,19 @@ nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 
 
+" Remap page up / down
+map <S-j> <C-F>
+map <S-k> <C-B>
+
+
 " Remap Tab - W
 nnoremap <S-Tab> :bnext<CR>
+cnoreabbrev Q bd
+
+
+" Remap Ctags
+nnoremap <S-I> <C-]>
+nnoremap <S-O> <C-T>
 
 
 " Compile key
@@ -204,8 +231,6 @@ autocmd bufnewfile Makefile so /home/evan/.vim/header/make_header.txt
 " Ctrl - p      =   CtrlP finding
 " Ctrl - c      =   Copy to clipboard in visual mode
 " Ctrl - v      =   paste from clipboard in normal mode
-" \ p           =   Show register menu to paste
-" \ m           =   Show marks menu to jump
 " Ctrl - h      =   Move left
 " Ctrl - l      =   Move right
 " Ctrl - j      =   Move down
